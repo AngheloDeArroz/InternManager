@@ -1,6 +1,6 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-# Intern Tracker
+# Intern Manager
 Intern Tracker is a web application designed to streamline the management of internships. It provides a platform for administrators to manage tasks and interns, while allowing interns to track their progress and complete assigned tasks.
 ## Key Features
 ### For Administrators
