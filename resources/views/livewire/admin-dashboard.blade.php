@@ -4,7 +4,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Interns Stats -->
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border border-gray-200">
-            <h3 class="text-lg font-semibold mb-2">Internal Users</h3>
+            <h3 class="text-lg font-semibold mb-2">Interns</h3>
             <p class="text-3xl font-bold text-indigo-600">{{ $interns->count() }}</p>
             <p class="text-gray-500">Total interns registered</p>
         </div>
