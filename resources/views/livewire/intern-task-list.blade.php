@@ -33,7 +33,7 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 @forelse($tasks as $task)
-                    <tr>
+                    <tr wire:key="task-{{ $task->id }}">
                         <td class="px-6 py-4">
                             <div class="text-sm font-medium text-gray-900">{{ $task->title }}</div>
                             <div class="text-sm text-gray-500">{{ Str::limit($task->description, 50) }}</div>
@@ -53,8 +53,13 @@
                                         class="text-indigo-600 hover:text-indigo-900 font-bold">
                                     Mark as Done
                                 </button>
+                            @elseif($task->pivot->status === 'done')
+                                <button wire:click="unmarkDone({{ $task->id }})" 
+                                        class="text-red-600 hover:text-red-900 font-bold">
+                                    Unmark as Done
+                                </button>
                             @else
-                                <span class="text-gray-400">Locked</span>
+                                <span class="text-gray-400 italic">Approved & Locked</span>
                             @endif
                         </td>
                     </tr>

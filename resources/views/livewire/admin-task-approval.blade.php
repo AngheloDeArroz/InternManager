@@ -22,7 +22,7 @@
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach($tasks as $task)
                     @foreach($task->users as $user)
-                        <tr>
+                        <tr wire:key="row-{{ $task->id }}-{{ $user->id }}-{{ $user->pivot->status }}">
                             <td class="px-6 py-4 whitespace-nowrap">{{ $user->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $task->title }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $task->hours }}h</td>
@@ -32,13 +32,26 @@
                                     {{ ucfirst($user->pivot->status) }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @if($user->pivot->status === 'done')
-                                    <button wire:click="approve({{ $task->id }}, {{ $user->id }})" 
-                                            class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1 px-3 rounded text-sm transition transition-colors">
-                                        Approve
-                                    </button>
-                                @endif
+                             <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <div wire:loading.class="opacity-50">
+                                    @if($user->pivot->status === 'done')
+                                        <button wire:click="approve({{ $task->id }}, {{ $user->id }})" 
+                                                wire:loading.attr="disabled"
+                                                wire:key="btn-approve-{{ $task->id }}-{{ $user->id }}"
+                                                class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1 px-3 rounded text-sm transition transition-colors shadow-sm disabled:opacity-50">
+                                            Approve
+                                        </button>
+                                    @elseif($user->pivot->status === 'approved')
+                                        <button wire:click="unapprove({{ $task->id }}, {{ $user->id }})" 
+                                                wire:loading.attr="disabled"
+                                                wire:key="btn-unapprove-{{ $task->id }}-{{ $user->id }}"
+                                                class="bg-red-100 text-red-700 hover:bg-red-200 font-bold py-1 px-3 rounded text-sm transition transition-colors border border-red-200 disabled:opacity-50">
+                                            Unapprove
+                                        </button>
+                                    @else
+                                        <span class="text-gray-400 italic">Awaiting Intern Completion</span>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @endforeach

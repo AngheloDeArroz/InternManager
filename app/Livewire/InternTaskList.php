@@ -9,14 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class InternTaskList extends Component
 {
-    public $tasks;
-
-    public function mount()
-    {
-        $user = Auth::user();
-        $this->tasks = $user->tasks;
-    }
-
     public function markDone($taskId)
     {
         $task = Task::findOrFail($taskId);
@@ -27,12 +19,27 @@ class InternTaskList extends Component
             'completed_at' => now(),
         ]);
 
-        $this->mount();
         session()->flash('message', 'Task marked as done, waiting for approval.');
+    }
+
+    public function unmarkDone($taskId)
+    {
+        $task = Task::findOrFail($taskId);
+        $user = Auth::user();
+
+        $task->users()->updateExistingPivot($user->id, [
+            'status' => 'pending',
+            'completed_at' => null,
+        ]);
+
+        session()->flash('message', 'Task unmarked as done.');
     }
 
     public function render()
     {
-        return view('livewire.intern-task-list');
+        $user = Auth::user();
+        return view('livewire.intern-task-list', [
+            'tasks' => $user->tasks()->get()
+        ]);
     }
 }

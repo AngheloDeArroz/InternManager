@@ -20,18 +20,4 @@ class InternController extends Controller
     {
         return view('intern.dashboard'); // Livewire will handle tasks & hours
     }
-
-    /** Mark a task as done */
-    public function markDone(Task $task)
-    {
-        /** @var User $user */
-        $user = Auth::user(); // typehint so IDE knows $user is a User
-
-        $task->users()->updateExistingPivot($user->id, [
-            'status' => 'done',
-            'completed_at' => now(),
-        ]);
-
-        return back()->with('success', 'Task marked as done, awaiting admin approval.');
-    }
 }
