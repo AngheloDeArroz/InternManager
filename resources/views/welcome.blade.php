@@ -13,7 +13,7 @@
 
             <div>
                 <h1 class="text-5xl font-bold text-blue-600 mb-4">
-                    InternTracker
+                    Intern Manager
                 </h1>
                 <p class="text-2xl text-gray-800">
                     Track internship tasks, progress, and remaining hours in one place.
